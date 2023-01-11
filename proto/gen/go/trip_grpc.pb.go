@@ -9,6 +9,8 @@ package trippb
 import (
 	context "context"
 	grpc "google.golang.org/grpc"
+	codes "google.golang.org/grpc/codes"
+	status "google.golang.org/grpc/status"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -52,13 +54,8 @@ type TripServiceServer interface {
 type UnimplementedTripServiceServer struct {
 }
 
-func (UnimplementedTripServiceServer) GetTrip(ctx context.Context, in *GetTripRequest, opts ...grpc.CallOption) (*GetTripResponse, error) {
-	out := new(GetTripResponse)
-	// err := c.cc.Invoke(ctx, "/coolcar.TripService/GetTrip", in, out, opts...)
-	// if err != nil {
-	// 	return nil, err
-	// }
-	return out, nil
+func (UnimplementedTripServiceServer) GetTrip(context.Context, *GetTripRequest) (*GetTripResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetTrip not implemented")
 }
 func (UnimplementedTripServiceServer) mustEmbedUnimplementedTripServiceServer() {}
 
