@@ -11,6 +11,7 @@ import (
 
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"google.golang.org/grpc"
+	"google.golang.org/protobuf/encoding/protojson"
 )
 
 
@@ -41,7 +42,19 @@ func startGRPCGateway() {
 	c, cancel := context.WithCancel(c);
 	defer cancel()
 	// 分发器，当有服务的时候，分发到哪个服务器上面
-	mux := runtime.NewServeMux()
+	// customMar := jsonpb.Marshaler{
+	// 	EnumsAsInts: true,
+	// }
+	// mar := runtime.JSONPb(customMar)
+	mux := runtime.NewServeMux(runtime.WithMarshalerOption(
+		runtime.MIMEWildcard,
+		&runtime.JSONPb{
+			MarshalOptions: protojson.MarshalOptions{
+				UseEnumNumbers:true,
+				UseProtoNames: true,
+			},
+		},
+	))
 	err := trippb.RegisterTripServiceHandlerFromEndpoint(c, mux, ":8081", []grpc.DialOption{grpc.WithInsecure()})
 	if(err != nil) {
 		log.Fatalf("cannot start grpc gateway %v", err)
