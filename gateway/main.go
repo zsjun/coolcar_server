@@ -2,11 +2,8 @@ package main
 
 import (
 	"context"
-	trippb "coolcar/proto/gen/go"
-	trip "coolcar/tripService"
-	"fmt"
+	authpb "coolcar/auth/api/gen/v1"
 	"log"
-	"net"
 	"net/http"
 
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
@@ -14,28 +11,28 @@ import (
 	"google.golang.org/protobuf/encoding/protojson"
 )
 
-
-
 func main() {
 	log.SetFlags(log.Lshortfile)
-	go startGRPCGateway()
-	// 监听端口
-	lis, err := net.Listen("tcp", ":8081")
-	if(err != nil) {
-		log.Fatalf("failed to listen: %v", err)
-	}
-	// 创建grpc服务
-	grpcServer := grpc.NewServer()
-	
-	trippb.RegisterTripServiceServer(grpcServer, &trip.Service{})
-	
-	// if err != nil {
-	// 	fmt.Println("服务启动失败", err)
-	// 	return
+	startGRPCGateway()
+	// // 监听端口
+	// lis, err := net.Listen("tcp", ":8081")
+	// if(err != nil) {
+	// 	log.Fatalf("failed to listen: %v", err)
 	// }
-	log.Fatal(grpcServer.Serve(lis))
-	fmt.Println("连接成功")
+	// // 创建grpc服务
+	// grpcServer := grpc.NewServer()
+	
+	// authpb.RegisterAuthServiceServer(grpcServer, &auth.Service{})
+	
+	// // if err != nil {
+	// // 	fmt.Println("服务启动失败", err)
+	// // 	return
+	// // }
+	// log.Fatal(grpcServer.Serve(lis))
+	// fmt.Println("连接成功")
+
 }
+
 func startGRPCGateway() {
 	// 建立空的上下文
 	c := context.Background();
@@ -55,7 +52,7 @@ func startGRPCGateway() {
 			},
 		},
 	))
-	err := trippb.RegisterTripServiceHandlerFromEndpoint(c, mux, ":8081", []grpc.DialOption{grpc.WithInsecure()})
+	err := authpb.RegisterAuthServiceHandlerFromEndpoint(c, mux, ":8081", []grpc.DialOption{grpc.WithInsecure()})
 	if(err != nil) {
 		log.Fatalf("cannot start grpc gateway %v", err)
 	}
@@ -65,4 +62,3 @@ func startGRPCGateway() {
 		log.Fatalf("cannot listen to 8080 %v", err)
 	}
 }
-

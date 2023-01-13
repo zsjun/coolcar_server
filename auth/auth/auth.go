@@ -7,12 +7,14 @@ import (
 	"go.uber.org/zap"
 )
 type Service struct {
-	Logger zap.Logger
-	// authpb.UnimplementedTripServiceServer
+	Logger *zap.Logger;
 }
 
 
 func (s *Service) Login(c context.Context, req *authpb.LoginRequest) (*authpb.LoginResponse, error) {
 	s.Logger.Info("receive code",zap.String("code", req.Code));
-	return nil,nil;
+	return &authpb.LoginResponse{
+		AccessToken: "111"+req.Code,
+		ExpiresIn: 7200,
+	},nil;
 }
