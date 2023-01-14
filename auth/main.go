@@ -7,10 +7,13 @@ import (
 	"coolcar/auth/dao"
 	"coolcar/auth/token"
 	"coolcar/auth/wechat"
+	"io/ioutil"
 	"log"
 	"net"
+	"os"
 	"time"
 
+	"github.com/dgrijalva/jwt-go"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"go.uber.org/zap"
@@ -33,7 +36,20 @@ func main() {
 	if err != nil {
 		logger.Fatal("cannot find mongodb", zap.Error(err))
 	}
+	
+  pkFile,err := os.OpenFile("private.key", os.O_RDWR,os.ModeAppend);
 
+	if err != nil {
+		panic(err)
+	}
+	pkBytes, err := ioutil.ReadAll(pkFile)
+	if err != nil {
+		panic(err)
+	}
+	privatekey, err := jwt.ParseRSAPrivateKeyFromPEM(pkBytes)
+	if err != nil {
+		panic(err)
+	}
 	s :=grpc.NewServer();
 
 	authpb.RegisterAuthServiceServer(s, &auth.Service{
@@ -44,7 +60,7 @@ func main() {
 		Logger: logger,
 		Mongo: dao.NewMongo(MongoClient.Database("coolcar")),
 		TokenExpire: 2 * time.Hour,
-		TokenGenerator: token.NewJWTTokenGen("coolcar/auth",privateKey) ,
+		TokenGenerator: token.NewJWTTokenGen("coolcar/auth",privatekey) ,
 	})
 
 	s.Serve(lis)
