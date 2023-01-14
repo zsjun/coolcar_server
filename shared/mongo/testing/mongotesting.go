@@ -15,7 +15,7 @@ import (
 )
 
 const (
-	image         = "mongo:4.4"
+	image         = "mongo:6"
 	containerPort = "27017/tcp"
 )
 
@@ -26,7 +26,7 @@ const defaultMongoURI = "mongodb://localhost:27017"
 // RunWithMongoInDocker runs the tests with
 // a mongodb instance in a docker container.
 func RunWithMongoInDocker(m *testing.M) int {
-	c, err := client.NewEnvClient()
+	c, err := client.NewClientWithOpts()
 	if err != nil {
 		panic(err)
 	}
@@ -47,7 +47,7 @@ func RunWithMongoInDocker(m *testing.M) int {
 				},
 			},
 		},
-	}, nil, "")
+	}, nil, nil, "")
 	if err != nil {
 		panic(err)
 	}
