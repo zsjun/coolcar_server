@@ -18,7 +18,6 @@ func (v *JWTTokenVerifier) Verify(token string) (string, error) {
 		func(*jwt.Token) (interface{}, error) {
 			return v.PublicKey, nil
 		})
-
 	if err != nil {
 		return "", fmt.Errorf("cannot parse token: %v", err)
 	}
@@ -35,6 +34,6 @@ func (v *JWTTokenVerifier) Verify(token string) (string, error) {
 	if err := clm.Valid(); err != nil {
 		return "", fmt.Errorf("claim not valid: %v", err)
 	}
-
+  fmt.Print("11223", clm)
 	return clm.Subject, nil
 }
