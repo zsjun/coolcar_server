@@ -48,13 +48,13 @@ func TestGenerateToken(t *testing.T) {
 	g.nowFunc = func() time.Time {
 		return time.Unix(1516239022,0)
 	}
-	tkn,err := g.GenerateToken("11111",700);
+	tkn,err := g.GenerateToken("63c11b34ba264eb0ea9ec14a",700);
 
 	if err != nil {
 		panic(err)
 	}
 
-	want := `eyJhbGciOiJSUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1MTYyMzk3MjIsImlhdCI6MTUxNjIzOTAyMiwiaXNzIjoiY29vbGNhci9hdXRoIiwic3ViIjoiMTExMTEifQ.BFG-cXnkaAFTijOo2DI3uGG3YHP30wvRH8PVC_Jjrt2R9G08nZSpC2OtyMT6Q6MkVcXzkVcFJok6_lPKN0j7JLbx_CD8e9CIBeA_pCqPTnlg8In7UN_hx3pe2FvFx7QzRUjlcx3JJp7mCtRcqsuitX83rOEq6EuyMFJmR_LvGeg3HpUVdV0n9T1yBU7uWioUgx_Xv_3Ocw9yhdhqc5hAKbqkI1FCp0SdWBvcfyy38oa1046jdaZWdtHfI-ZoC7gncwt5bC260V-xs3tqjouzgpi6aEwrJ9BXeY5oCV_oCdWc5j6T484mxkxuftxXshjh2Grm5Ak5g5qSvPJ_0S8wNA`
+	want := `eyJhbGciOiJSUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1MTYyMzk3MjIsImlhdCI6MTUxNjIzOTAyMiwiaXNzIjoiY29vbGNhci9hdXRoIiwic3ViIjoiNjNjMTFiMzRiYTI2NGViMGVhOWVjMTRhIn0.O7d8glbn-4AheMCBY7T7QNLJQV8rBmfadE5xRk53fdrHO084aA1FxUB4uVugUJBXaxN_IKmio1ZodORSuZlSDx1C24i0c8PRI9ciyOmmR5abXYTyovpwCqe4WQvagNwIfqYeBgWCg-RBnvmXNAE5gis90xSKrBnB4FfvvjmrdhEcuD7bM0khNeNRVkcSM3_BDtuqCshWclz9i4-L39cvQTQ8bH7VMN_qKNI3e_k0D52HgPeZ_zwEax-18gX1UCbwJ8R0HXbk71vBlzJB0fjyZFgsbA9b8Ukr39KWyHTCOINEM8IK_VjwWiOXC9tPu-cIiphXYDq_nLPKTTbLULtr2g`
 	if tkn != want {
 		t.Errorf("sdd want: %q; got %q", want,tkn)
 	}
