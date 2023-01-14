@@ -5,9 +5,11 @@ import (
 	authpb "coolcar/auth/api/gen/v1"
 	"coolcar/auth/auth"
 	"coolcar/auth/dao"
+	"coolcar/auth/token"
 	"coolcar/auth/wechat"
 	"log"
 	"net"
+	"time"
 
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -41,6 +43,8 @@ func main() {
 		},
 		Logger: logger,
 		Mongo: dao.NewMongo(MongoClient.Database("coolcar")),
+		TokenExpire: 2 * time.Hour,
+		TokenGenerator: token.NewJWTTokenGen("coolcar/auth",privateKey) ,
 	})
 
 	s.Serve(lis)
