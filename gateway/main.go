@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	authpb "coolcar/auth/api/gen/v1"
+	rentalpb "coolcar/rental/api/gen/v1"
 	"log"
 	"net/http"
 
@@ -55,6 +56,10 @@ func startGRPCGateway() {
 	err := authpb.RegisterAuthServiceHandlerFromEndpoint(c, mux, ":8081", []grpc.DialOption{grpc.WithInsecure()})
 	if(err != nil) {
 		log.Fatalf("cannot start grpc gateway %v", err)
+	}
+	err = rentalpb.RegisterTripServiceHandlerFromEndpoint(c, mux, ":8082", []grpc.DialOption{grpc.WithInsecure()})
+	if(err != nil) {
+		log.Fatalf("cannot start grpc gateway 8082 %v", err)
 	}
 	// 8080的请求分发到8081的服务器上面
 	err = http.ListenAndServe(":8080", mux)
