@@ -11,6 +11,7 @@ import (
 )
 
 // GRPCConfig defines a grpc server.
+// log config
 type GRPCConfig struct {
 	Name              string
 	Addr              string
@@ -20,6 +21,8 @@ type GRPCConfig struct {
 }
 
 // RunGRPCServer runs a grpc server.
+// Addr port
+// name 
 func RunGRPCServer(c *GRPCConfig) error {
 	nameField := zap.String("name", c.Name)
 	lis, err := net.Listen("tcp", c.Addr)

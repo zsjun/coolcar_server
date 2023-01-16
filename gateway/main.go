@@ -4,6 +4,7 @@ import (
 	"context"
 	authpb "coolcar/auth/api/gen/v1"
 	rentalpb "coolcar/rental/api/gen/v1"
+	"coolcar/shared/server"
 	"log"
 	"net/http"
 
@@ -35,6 +36,10 @@ func main() {
 }
 
 func startGRPCGateway() {
+	lg, err := server.NewZapLogger();
+	if err != nil {
+		log.Fatalf("cannot create zap:logger: %v", err)
+	}
 	// 建立空的上下文
 	c := context.Background();
 	c, cancel := context.WithCancel(c);
@@ -53,17 +58,42 @@ func startGRPCGateway() {
 			},
 		},
 	))
-	err := authpb.RegisterAuthServiceHandlerFromEndpoint(c, mux, ":8081", []grpc.DialOption{grpc.WithInsecure()})
-	if(err != nil) {
-		log.Fatalf("cannot start grpc gateway %v", err)
+	serverConfig := []struct{
+		name string;
+		addr string;
+		registerFunc func(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error)
+	}{
+		{
+			name:"auth",
+			addr:"localhost:8081",
+			registerFunc:authpb.RegisterAuthServiceHandlerFromEndpoint,
+		},
+		{
+			name:"rental",
+			addr:"localhost:8082",
+			registerFunc:rentalpb.RegisterTripServiceHandlerFromEndpoint,
+		},
+
 	}
-	err = rentalpb.RegisterTripServiceHandlerFromEndpoint(c, mux, ":8082", []grpc.DialOption{grpc.WithInsecure()})
-	if(err != nil) {
-		log.Fatalf("cannot start grpc gateway 8082 %v", err)
+	for _, s := range serverConfig {
+		err := s.registerFunc(c, mux, ":8081", []grpc.DialOption{grpc.WithInsecure()})
+		if err != nil {
+			log.Fatalf("cannot register service %s: %v",s.name,err)
+		}
 	}
+	// err := authpb.RegisterAuthServiceHandlerFromEndpoint(c, mux, ":8081", []grpc.DialOption{grpc.WithInsecure()})
+	// if(err != nil) {
+	// 	log.Fatalf("cannot start grpc gateway %v", err)
+	// }
+	// err = rentalpb.RegisterTripServiceHandlerFromEndpoint(c, mux, ":8082", []grpc.DialOption{grpc.WithInsecure()})
+	// if(err != nil) {
+	// 	log.Fatalf("cannot start grpc gateway 8082 %v", err)
+	// }
 	// 8080的请求分发到8081的服务器上面
-	err = http.ListenAndServe(":8080", mux)
-	if( err != nil) {
+	addr := ":8080";
+	lg.Sugar().Infof("grpc server started ad: %s", addr);
+	err = http.ListenAndServe(addr, mux);
+	if err != nil {
 		log.Fatalf("cannot listen to 8080 %v", err)
 	}
 }
