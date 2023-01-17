@@ -72,5 +72,6 @@ service CarService {
     rpc GetCars (GetCarsRequest) returns (GetCarsResponse);
     rpc LockCar (LockCarRequest) returns (LockCarResponse);
     rpc UnlockCar (UnlockCarRequest) returns (UnlockCarResponse);
+    // 发送当前车的状态是什么
     rpc UpdateCar (UpdateCarRequest) returns (UpdateCarResponse);
 }
