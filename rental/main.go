@@ -31,7 +31,11 @@ func main() {
 	if err != nil {
 		logger.Fatal("cannot find mongodb", zap.Error(err))
 	}
-	db := MongoClient.Database("coolcar")
+	db := MongoClient.Database("coolcar");
+	profileService := &profile.Service{
+		Mongo: profiledao.NewMongo(db),
+		Logger: logger,
+	}
 	err = server.RunGRPCServer(&server.GRPCConfig{
 		Name: "rental",
 		Addr: ":8082",
@@ -40,15 +44,14 @@ func main() {
 		RegisterFunc: func(s *grpc.Server) {
 			rentalpb.RegisterTripServiceServer(s, &trip.Service{
 				CarManager: &car.Manager{},
-				ProfileManager: &profileClient.Manager{},
+				ProfileManager: &profileClient.Manager{
+					Fetcher: profileService,
+				},
 				POIManager: &poi.Manager{},
 				Mongo: tripdao.NewMongo(db),
 				Logger: logger,
 			});
-			rentalpb.RegisterProfileServiceServer(s, &profile.Service{
-				Mongo: profiledao.NewMongo(db),
-				Logger: logger,
-			})
+			rentalpb.RegisterProfileServiceServer(s, profileService)
 		},
 
 	})
