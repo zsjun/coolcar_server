@@ -4,7 +4,7 @@ import (
 	"context"
 	rentalpb "coolcar/rental/api/gen/v1"
 
-	// "coolcar/rental/trip/client/poi"
+	"coolcar/rental/trip/client/poi"
 	"coolcar/rental/trip/dao"
 	"coolcar/shared/auth"
 	"coolcar/shared/id"

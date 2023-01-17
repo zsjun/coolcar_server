@@ -214,7 +214,9 @@ var TripService_ServiceDesc = grpc.ServiceDesc{
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ProfileServiceClient interface {
+	// 获取身份信息
 	GetProfile(ctx context.Context, in *GetProfileRequest, opts ...grpc.CallOption) (*Profile, error)
+	// 提交身份材料
 	SubmitProfile(ctx context.Context, in *Identity, opts ...grpc.CallOption) (*Profile, error)
 	ClearProfile(ctx context.Context, in *ClearProfileRequest, opts ...grpc.CallOption) (*Profile, error)
 	GetProfilePhoto(ctx context.Context, in *GetProfilePhotoRequest, opts ...grpc.CallOption) (*GetProfilePhotoResponse, error)
@@ -298,7 +300,9 @@ func (c *profileServiceClient) ClearProfilePhoto(ctx context.Context, in *ClearP
 // All implementations should embed UnimplementedProfileServiceServer
 // for forward compatibility
 type ProfileServiceServer interface {
+	// 获取身份信息
 	GetProfile(context.Context, *GetProfileRequest) (*Profile, error)
+	// 提交身份材料
 	SubmitProfile(context.Context, *Identity) (*Profile, error)
 	ClearProfile(context.Context, *ClearProfileRequest) (*Profile, error)
 	GetProfilePhoto(context.Context, *GetProfilePhotoRequest) (*GetProfilePhotoResponse, error)
