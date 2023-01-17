@@ -110,9 +110,13 @@ message CompleteProfilePhotoRequest {}
 message ClearProfilePhotoRequest {}
 message ClearProfilePhotoResponse {}
 
+// 身份验证
 service ProfileService {
+    // 获取身份信息
     rpc GetProfile (GetProfileRequest) returns (Profile);
+    // 提交身份材料
     rpc SubmitProfile (Identity) returns (Profile);
+
     rpc ClearProfile (ClearProfileRequest) returns (Profile);
 
     rpc GetProfilePhoto (GetProfilePhotoRequest) returns (GetProfilePhotoResponse);

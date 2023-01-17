@@ -71,11 +71,14 @@ func (s *Service) CreateTrip(c context.Context, req *rentalpb.CreateTripRequest)
 	// 检查车辆状态
 	carID := id.CarID(req.CarId)
 	err = s.CarManager.Verify(c, carID, req.Start)
+	// 
 	if err != nil {
 		return nil, status.Error(codes.FailedPrecondition, err.Error())
 	}
 
 	// 创建行程：写入数据库，开始计费
+	// 创建一个点
+	// Start车辆开始的地点
 	ls := s.calcCurrentStatus(c, &rentalpb.LocationStatus{
 		Location:     req.Start,
 		TimestampSec: nowFunc(),
@@ -89,14 +92,17 @@ func (s *Service) CreateTrip(c context.Context, req *rentalpb.CreateTripRequest)
 		Current:    ls,
 	})
 	if err != nil {
+		// 错误打给自己看，不返回给用户看
 		s.Logger.Warn("cannot create trip", zap.Error(err))
 		return nil, status.Error(codes.AlreadyExists, "")
 	}
 
 	// 车辆开锁
+	// 后台去开锁
 	go func() {
 		err := s.CarManager.Unlock(context.Background(), carID, aid, objid.ToTripID(tr.ID), req.AvatarUrl)
 		if err != nil {
+			// 如果开锁失败，告诉用户
 			s.Logger.Error("cannot unlock car", zap.Error(err))
 		}
 	}()
