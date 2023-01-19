@@ -1,0 +1,8 @@
+type: google.api.Service
+config_version: 3
+
+http:
+  rules:
+    - selector: stream.v1.Greeter.GetStream
+      post: /v1/getStream
+      body: "*"

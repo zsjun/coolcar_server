@@ -23,3 +23,4 @@ function genProto {
  genProto rental
  genProto blob 1
  genProto car
+ genProto stream

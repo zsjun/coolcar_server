@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package stream.v1;
+option go_package="coolcar/stream/api/gen/v1;proto";
+
+
+message StreamReq {
+  string data = 1;
+}
+message StramRes {
+  string data = 1;
+}
+service Greeter {
+  // 
+  rpc NormalSteam(StreamReq) returns (StramRes);
+  //  服务端流模式
+  rpc GetStream(StreamReq) returns (stream StramRes);
+  // 客户端流模式
+  rpc PutStream(stream StreamReq) returns (StramRes);
+  // 双流模式
+  rpc AllStream(stream StreamReq) returns (stream StramRes);
+}
