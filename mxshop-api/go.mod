@@ -1,6 +1,6 @@
 module mxshop-api
 
-go 1.15
+go 1.19
 
 require (
 	github.com/HdrHistogram/hdrhistogram-go v1.0.1 // indirect
