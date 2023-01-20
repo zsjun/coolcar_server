@@ -3,9 +3,10 @@ package main
 import (
 	"context"
 	"fmt"
+	"time"
+
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/status"
-	"time"
 
 	"OldPackageTest/grpc_error_test/proto"
 )
