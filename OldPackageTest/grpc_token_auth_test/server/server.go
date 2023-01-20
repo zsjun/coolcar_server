@@ -29,7 +29,7 @@ func main() {
 		md, ok := metadata.FromIncomingContext(ctx)
 		fmt.Println(md)
 		if !ok {
-			//已经开始接触到grpc的错误处理了
+			// 已经开始接触到grpc的错误处理了
 			return resp, status.Error(codes.Unauthenticated, "无token认证信息")
 		}
 
@@ -37,14 +37,15 @@ func main() {
 			appid  string
 			appkey string
 		)
-
-		if va1, ok := md["appid"]; ok {
+		va1, ok := md["appid"];
+		if  ok {
 			appid = va1[0]
 		}
-
-		if va1, ok := md["appkey"]; ok {
+		va1, ok = md["appkey"];
+		if  ok {
 			appkey = va1[0]
 		}
+		fmt.Println(11, appid, appkey,appid != "101010")
 
 		if appid != "101010" || appkey != "i am key" {
 			return resp, status.Error(codes.Unauthenticated, "无token认证信息")

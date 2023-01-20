@@ -1,7 +1,8 @@
 syntax = "proto3";
 
-import "validate.proto";
 option go_package=".;proto";
+
+import "./validate.proto";
 
 service Greeter {
     rpc SayHello (Person) returns (Person);
