@@ -11,6 +11,7 @@ import (
 	"gorm.io/gorm/logger"
 )
 
+// 设置一个表
 type Product struct {
 	gorm.Model
 	Code  sql.NullString
@@ -21,8 +22,10 @@ func main() {
 	// 参考 https://github.com/go-sql-driver/mysql#dsn-data-source-name 获取详情
 	dsn := "root:guilai123@tcp(127.0.0.1:3306)/gorm_test?charset=utf8mb4&parseTime=True&loc=Local"
 
+	// 配置项
 	newLogger := logger.New(
 		log.New(os.Stdout, "\r\n", log.LstdFlags), // io writer
+		// 设置日志
 		logger.Config{
 			SlowThreshold: time.Second,   // 慢 SQL 阈值
 			LogLevel:      logger.Info, // Log level
@@ -45,7 +48,7 @@ func main() {
 	_ = db.AutoMigrate(&Product{}) //此处应该有sql语句
 
 	// 新增
-	db.Create(&Product{Code: sql.NullString{"D42", true}, Price: 100})
+	db.Create(&Product{Code: sql.NullString{String: "D42",Valid: true}, Price: 100})
 
 	// Read
 	var product Product
@@ -54,8 +57,9 @@ func main() {
 
 	// Update - 将 product 的 price 更新为 200
 	db.Model(&product).Update("Price", 200)
+	db.Model(&product).Updates(Product{Price: 200, Code: ""});
 	// Update - 更新多个字段
-	db.Model(&product).Updates(Product{Price: 200, Code:sql.NullString{"", true}}) // 仅更新非零值字段
+	// db.Model(&product).Updates(Product{Price: 200, Code:sql.NullString{String: "", Valid: true}}) // 仅更新非零值字段
 	//如果我们去更新一个product 只设置了price：200
 	//db.Model(&product).Updates(map[string]interface{}{"Price": 200, "Code": "F42"})
 

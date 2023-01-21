@@ -9,14 +9,16 @@ import (
 )
 
 func MyLogger() gin.HandlerFunc {
+	// 返回一个函数就可以了
 	return func(c *gin.Context) {
 		t := time.Now()
+		// 添加内容到context中
 		c.Set("example", "123456")
-		//让原本改执行的逻辑继续执行
+		// 让原本应该执行的逻辑继续执行
 		c.Next()
-
+		// 执行完以后，然后再执行之类的逻辑
 		end := time.Since(t)
-		fmt.Printf("耗时:%V\n", end)
+		fmt.Printf("耗时:%v\n", end)
 		status := c.Writer.Status()
 		fmt.Println("状态", status)
 	}
