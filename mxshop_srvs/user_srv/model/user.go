@@ -7,7 +7,9 @@ import (
 )
 
 type BaseModel struct {
+	// 主键
 	ID int32 `gorm:"primarykey"`
+	// gorm 数据库里边的列名字
 	CreatedAt time.Time `gorm:"column:add_time"`
 	UpdatedAt time.Time `gorm:"column:update_time"`
 	DeletedAt gorm.DeletedAt
@@ -21,8 +23,10 @@ type BaseModel struct {
 	3. md5 信息摘要算法
 	密码如果不可以反解，用户找回密码
  */
+// 用户相关的modal
 type User struct {
 	BaseModel
+	// 索引，后期通过手机号去查询用户
 	Mobile string `gorm:"index:idx_mobile;unique;type:varchar(11);not null"`
 	Password string `gorm:"type:varchar(100);not null"`
 	NickName string `gorm:"type:varchar(20)"`
