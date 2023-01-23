@@ -3,4 +3,6 @@ go 1.19
 use (
   ./OldPackageTest
   ./GormStart
+  ./mxshop_srvs
+  ./mxshop-api
 )

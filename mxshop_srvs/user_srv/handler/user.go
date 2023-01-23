@@ -21,7 +21,7 @@ import (
 
 type UserServer struct{}
 
-func ModelToRsponse(user model.User) proto.UserInfoResponse{
+func ModelToRsponse(user model.User) *proto.UserInfoResponse{
 	//在grpc的message中字段有默认值，你不能随便赋值nil进去，容易出错
 	//这里要搞清， 哪些字段是有默认值
 	userInfoRsp := proto.UserInfoResponse{
@@ -35,7 +35,7 @@ func ModelToRsponse(user model.User) proto.UserInfoResponse{
 	if user.Birthday != nil {
 		userInfoRsp.BirthDay = uint64(user.Birthday.Unix())
 	}
-	return userInfoRsp
+	return &userInfoRsp
 }
 
 func Paginate(page, pageSize int) func(db *gorm.DB) *gorm.DB {
@@ -59,6 +59,7 @@ func Paginate(page, pageSize int) func(db *gorm.DB) *gorm.DB {
 func (s *UserServer) GetUserList(ctx context.Context, req *proto.PageInfo) (*proto.UserListResponse, error){
 	//获取用户列表
 	var users []model.User
+	// 获取数据库里边数据
 	result := global.DB.Find(&users)
 	if result.Error != nil {
 		return nil, result.Error
@@ -71,7 +72,7 @@ func (s *UserServer) GetUserList(ctx context.Context, req *proto.PageInfo) (*pro
 
 	for _, user := range users{
 		userInfoRsp := ModelToRsponse(user)
-		rsp.Data = append(rsp.Data, &userInfoRsp)
+		rsp.Data = append(rsp.Data, userInfoRsp)
 	}
 	return rsp, nil
 }
@@ -88,7 +89,7 @@ func (s *UserServer) GetUserByMobile(ctx context.Context, req *proto.MobileReque
 	}
 
 	userInfoRsp := ModelToRsponse(user)
-	return &userInfoRsp, nil
+	return userInfoRsp, nil
 }
 
 func (s *UserServer) GetUserById(ctx context.Context, req *proto.IdRequest) (*proto.UserInfoResponse, error){
@@ -103,7 +104,7 @@ func (s *UserServer) GetUserById(ctx context.Context, req *proto.IdRequest) (*pr
 	}
 
 	userInfoRsp := ModelToRsponse(user)
-	return &userInfoRsp, nil
+	return userInfoRsp, nil
 }
 
 func (s *UserServer) CreateUser(ctx context.Context, req *proto.CreateUserInfo) (*proto.UserInfoResponse, error){
@@ -118,7 +119,7 @@ func (s *UserServer) CreateUser(ctx context.Context, req *proto.CreateUserInfo) 
 	user.NickName = req.NickName
 
 	//密码加密
-	options := &password.Options{16, 100, 32, sha512.New}
+	options := &password.Options{SaltLen: 16, Iterations: 100, KeyLen: 32, HashFunction: sha512.New}
 	salt, encodedPwd := password.Encode(req.PassWord, options)
 	user.Password = fmt.Sprintf("$pbkdf2-sha512$%s$%s", salt, encodedPwd)
 
@@ -128,7 +129,7 @@ func (s *UserServer) CreateUser(ctx context.Context, req *proto.CreateUserInfo) 
 	}
 
 	userInfoRsp := ModelToRsponse(user)
-	return &userInfoRsp, nil
+	return userInfoRsp, nil
 }
 
 func (s *UserServer) UpdateUser(ctx context.Context, req *proto.UpdateUserInfo) (*empty.Empty, error){
@@ -153,7 +154,7 @@ func (s *UserServer) UpdateUser(ctx context.Context, req *proto.UpdateUserInfo) 
 
 func (s *UserServer) CheckPassWord(ctx context.Context, req *proto.PasswordCheckInfo) (*proto.CheckResponse, error){
 	//校验密码
-	options := &password.Options{16, 100, 32, sha512.New}
+	options := &password.Options{SaltLen: 16, Iterations: 100, KeyLen: 32, HashFunction: sha512.New}
 	passwordInfo := strings.Split(req.EncryptedPassword, "$")
 	check := password.Verify(req.Password, passwordInfo[2], passwordInfo[3], options)
 	return &proto.CheckResponse{Success: check}, nil

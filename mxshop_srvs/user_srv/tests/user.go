@@ -21,7 +21,7 @@ func Init(){
 	userClient = proto.NewUserClient(conn)
 }
 
-func TestGetUserList(){
+func GetUserList(){
 	rsp, err := userClient.GetUserList(context.Background(), &proto.PageInfo{
 		Pn:    1,
 		PSize: 5,
@@ -29,6 +29,7 @@ func TestGetUserList(){
 	if err != nil {
 		panic(err)
 	}
+	fmt.Println(rsp)
 	for _, user := range rsp.Data {
 		fmt.Println(user.Mobile, user.NickName, user.PassWord)
 		checkRsp, err := userClient.CheckPassWord(context.Background(), &proto.PasswordCheckInfo{
@@ -59,7 +60,7 @@ func TestCreateUser(){
 func main() {
 	Init()
 	//TestCreateUser()
-	TestGetUserList()
+	GetUserList()
 
 	conn.Close()
 }
