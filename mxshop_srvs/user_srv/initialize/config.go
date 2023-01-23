@@ -53,8 +53,8 @@ func InitConfig(){
 		NotLoadCacheAtStart: true,
 		LogDir:              "tmp/nacos/log",
 		CacheDir:            "tmp/nacos/cache",
-		RotateTime:          "1h",
-		MaxAge:              3,
+		// RotateTime:          "1h",
+		// MaxAge:              3,
 		LogLevel:            "debug",
 	}
 

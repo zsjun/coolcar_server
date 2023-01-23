@@ -46,24 +46,25 @@ func main() {
 
 	options := &password.Options{SaltLen: 16, Iterations: 100, KeyLen: 32, HashFunction: sha512.New}
 	salt, encodedPwd := password.Encode("admin123", options)
+	// $pbkdf2-sha512是算法
 	newPassword := fmt.Sprintf("$pbkdf2-sha512$%s$%s", salt, encodedPwd)
 	fmt.Println(newPassword)
 
-	// for i := 0; i<10; i++ {
-	// 	user := model.User{
-	// 		NickName: fmt.Sprintf("bobby%d",i),
-	// 		Mobile: fmt.Sprintf("1878222222%d",i),
-	// 		Password: newPassword,
-	// 	}
-	// 	db.Save(&user)
-	// }
+	for i := 0; i<10; i++ {
+		user := model.User{
+			NickName: fmt.Sprintf("bobby%d",i),
+			Mobile: fmt.Sprintf("1878222222%d",i),
+			Password: newPassword,
+		}
+		db.Save(&user)
+	}
 
 	////设置全局的logger，这个logger在我们执行每个sql语句的时候会打印每一行sql
 	////sql才是最重要的，本着这个原则我尽量的给大家看到每个api背后的sql语句是什么
 	//
 	////定义一个表结构， 将表结构直接生成对应的表 - migrations
 	//// 迁移 schema
-	_ = db.AutoMigrate(&model.User{}) //此处应该有sql语句
+	// _ = db.AutoMigrate(&model.User{}) //此处应该有sql语句
 
 	//fmt.Println(genMd5("xxxxx_123456"))
 	//将用户的密码变一下 随机字符串+用户密码
