@@ -1,10 +1,12 @@
 package router
 
 import (
-	"github.com/gin-gonic/gin"
 	"mxshop-api/user-web/api"
+
+	"github.com/gin-gonic/gin"
 )
 
+// 注册用户相关的路由
 func InitBaseRouter(Router *gin.RouterGroup){
 	BaseRouter := Router.Group("base")
 	{

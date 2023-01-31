@@ -2,11 +2,12 @@ package main
 
 import (
 	"fmt"
-	uuid "github.com/satori/go.uuid"
 	"mxshop-api/user-web/utils/register/consul"
 	"os"
 	"os/signal"
 	"syscall"
+
+	uuid "github.com/satori/go.uuid"
 
 	"github.com/gin-gonic/gin/binding"
 	ut "github.com/go-playground/universal-translator"

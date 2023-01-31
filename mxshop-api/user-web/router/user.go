@@ -1,13 +1,16 @@
 package router
 
 import (
-	"github.com/gin-gonic/gin"
 	"mxshop-api/user-web/api"
 	"mxshop-api/user-web/middlewares"
+
+	"github.com/gin-gonic/gin"
 )
 
+// 全局的routerGroup
 func InitUserRouter(Router *gin.RouterGroup){
 	UserRouter := Router.Group("user")
+	// 增加代码的结构性
 	{
 		UserRouter.GET("", middlewares.JWTAuth(), middlewares.IsAdminAuth(), api.GetUserList)
 		UserRouter.POST("pwd_login", api.PassWordLogin)

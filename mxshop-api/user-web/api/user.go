@@ -3,15 +3,16 @@ package api
 import (
 	"context"
 	"fmt"
-	"github.com/dgrijalva/jwt-go"
-	"github.com/go-playground/validator/v10"
-	"github.com/go-redis/redis/v8"
 	"mxshop-api/user-web/middlewares"
 	"mxshop-api/user-web/models"
 	"net/http"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/dgrijalva/jwt-go"
+	"github.com/go-playground/validator/v10"
+	"github.com/go-redis/redis/v8"
 
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
@@ -78,7 +79,7 @@ func HandleValidatorError(c *gin.Context, err error){
 }
 
 func GetUserList(ctx *gin.Context) {
-	//拨号连接用户grpc服务器 跨域的问题 - 后端解决 也可以前端来解决
+	// 拨号连接用户grpc服务器 跨域的问题 - 后端解决 也可以前端来解决
 	claims, _ := ctx.Get("claims")
 	currentUser := claims.(*models.CustomClaims)
 	zap.S().Infof("访问用户: %d", currentUser.ID)
