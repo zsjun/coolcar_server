@@ -2,9 +2,11 @@ package main
 
 import (
 	"fmt"
+
 	"github.com/spf13/viper"
 )
 
+// 把config.yaml中的字段放到当前字段里边
 type ServerConfig struct {
 	ServiceName string `mapstructure:"name"`
 	Port        int    `mapstructure:"port"`
@@ -13,7 +15,7 @@ type ServerConfig struct {
 func main() {
 	v := viper.New()
 	//文件的路径如何设置
-	v.SetConfigFile("viper_test/ch01/config.yaml")
+	v.SetConfigFile("./config.yaml")
 	if err := v.ReadInConfig(); err != nil {
 		panic(err)
 	}

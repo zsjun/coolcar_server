@@ -22,9 +22,9 @@ func GetEnvInfo(env string) bool {
 func InitConfig(){
 	debug := GetEnvInfo("MXSHOP_DEBUG")
 	configFilePrefix := "config"
-	configFileName := fmt.Sprintf("user-web/%s-pro.yaml", configFilePrefix)
+	configFileName := fmt.Sprintf("%s-pro.yaml", configFilePrefix)
 	if debug {
-		configFileName = fmt.Sprintf("user-web/%s-debug.yaml", configFilePrefix)
+		configFileName = fmt.Sprintf("%s-debug.yaml", configFilePrefix)
 	}
 
 	v := viper.New()
@@ -53,8 +53,8 @@ func InitConfig(){
 		NotLoadCacheAtStart: true,
 		LogDir:              "tmp/nacos/log",
 		CacheDir:            "tmp/nacos/cache",
-		RotateTime:          "1h",
-		MaxAge:              3,
+		// RotateTime:          "1h",
+		// MaxAge:              3,
 		LogLevel:            "debug",
 	}
 

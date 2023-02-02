@@ -2,9 +2,10 @@ package main
 
 import (
 	"fmt"
+	"time"
+
 	"github.com/fsnotify/fsnotify"
 	"github.com/spf13/viper"
-	"time"
 )
 
 //如何将线上和线下的配置文件隔离
@@ -20,6 +21,7 @@ type ServerConfig struct {
 	MysqlInfo   MysqlConfig `mapstructure:"mysql"`
 }
 
+// 
 func GetEnvInfo(env string) bool {
 	viper.AutomaticEnv()
 	return viper.GetBool(env)
@@ -29,9 +31,9 @@ func GetEnvInfo(env string) bool {
 func main() {
 	debug := GetEnvInfo("MXSHOP_DEBUG")
 	configFilePrefix := "config"
-	configFileName := fmt.Sprintf("viper_test/ch02/%s-pro.yaml", configFilePrefix)
+	configFileName := fmt.Sprintf("%s-pro.yaml", configFilePrefix)
 	if debug {
-		configFileName = fmt.Sprintf("viper_test/ch02/%s-debug.yaml", configFilePrefix)
+		configFileName = fmt.Sprintf("%s-debug.yaml", configFilePrefix)
 	}
 
 	v := viper.New()
@@ -47,7 +49,7 @@ func main() {
 	fmt.Println(serverConfig)
 	fmt.Printf("%V", v.Get("name"))
 
-	//viper的功能 - 动态监控变化
+	// viper的功能 - 动态监控变化
 	v.WatchConfig()
 	v.OnConfigChange(func(e fsnotify.Event) {
 		fmt.Println("config file channed： ", e.Name)

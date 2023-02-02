@@ -1,4 +1,4 @@
-name: 'user-web'
+name: "user-web"
 mysql:
-  host: '127.0.0.2'
+  host: "127.0.0.2"
   port: 3308

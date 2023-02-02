@@ -7,6 +7,7 @@ import (
 
 type JsonTime time.Time
 
+// 调用MarshalJSON方法
 func (j JsonTime) MarshalJSON() ([]byte, error){
 	var stmp = fmt.Sprintf("\"%s\"", time.Time(j).Format("2006-01-02"))
 	return []byte(stmp), nil
