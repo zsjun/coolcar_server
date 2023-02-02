@@ -22,7 +22,7 @@ import (
 	"mxshop-api/user-web/forms"
 	"mxshop-api/user-web/global"
 	"mxshop-api/user-web/global/reponse"
-	"mxshop-api/user-web/proto"
+	"mxshop-api/user-web/grpc/proto"
 )
 
 func removeTopStruct(fileds map[string]string) map[string]string{

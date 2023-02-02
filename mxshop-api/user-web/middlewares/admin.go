@@ -1,9 +1,10 @@
 package middlewares
 
 import (
-	"github.com/gin-gonic/gin"
 	"mxshop-api/user-web/models"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
 func IsAdminAuth() gin.HandlerFunc{

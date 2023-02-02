@@ -9,7 +9,7 @@ import (
 	"google.golang.org/grpc"
 
 	"mxshop-api/user-web/global"
-	"mxshop-api/user-web/proto"
+	"mxshop-api/user-web/grpc/proto"
 )
 
 func InitSrvConn(){
