@@ -10,6 +10,7 @@ require (
 require (
 	github.com/armon/go-metrics v0.3.2 // indirect
 	github.com/go-playground/form v3.1.4+incompatible // indirect
+	github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/hashicorp/consul/api v1.3.0 // indirect
 	github.com/hashicorp/go-cleanhttp v0.5.1 // indirect
@@ -20,7 +21,9 @@ require (
 	github.com/jpillora/backoff v1.0.0 // indirect
 	github.com/mitchellh/go-homedir v1.1.0 // indirect
 	github.com/mitchellh/mapstructure v1.1.2 // indirect
+	github.com/mojocn/base64Captcha v1.3.5 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
+	golang.org/x/image v0.0.0-20190501045829-6d32002ffd75 // indirect
 	golang.org/x/net v0.4.0 // indirect
 	golang.org/x/sys v0.3.0 // indirect
 	golang.org/x/text v0.5.0 // indirect
