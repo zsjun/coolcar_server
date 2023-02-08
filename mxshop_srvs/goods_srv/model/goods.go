@@ -7,7 +7,6 @@ import (
 	"gorm.io/gorm"
 
 	"mxshop_srvs/goods_srv/global"
-
 )
 
 //类型， 这个字段是否能为null， 这个字段应该设置为可以为null还是设置为空， 0
@@ -16,6 +15,7 @@ import (
 //这些类型我们使用int32还是int
 type Category struct{
 	BaseModel
+	// gorm数据库中的类型
 	Name  string `gorm:"type:varchar(20);not null" json:"name"`
 	ParentCategoryID int32 `json:"parent"`
 	ParentCategory *Category `json:"-"`

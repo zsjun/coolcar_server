@@ -8,6 +8,24 @@ require (
 )
 
 require (
+	github.com/StackExchange/wmi v0.0.0-20190523213315-cbe66965904d // indirect
+	github.com/beorn7/perks v1.0.1 // indirect
+	github.com/cespare/xxhash/v2 v2.1.1 // indirect
+	github.com/go-ole/go-ole v1.2.4 // indirect
+	github.com/google/uuid v1.3.0 // indirect
+	github.com/matttproud/golang_protobuf_extensions v1.0.1 // indirect
+	github.com/prometheus/client_golang v1.9.0 // indirect
+	github.com/prometheus/client_model v0.2.0 // indirect
+	github.com/prometheus/common v0.15.0 // indirect
+	github.com/prometheus/procfs v0.2.0 // indirect
+	github.com/shirou/gopsutil/v3 v3.21.6 // indirect
+	github.com/tklauser/go-sysconf v0.3.6 // indirect
+	github.com/tklauser/numcpus v0.2.2 // indirect
+	gopkg.in/yaml.v2 v2.3.0 // indirect
+)
+
+require (
+	github.com/alibaba/sentinel-golang v1.0.4
 	github.com/armon/go-metrics v0.3.2 // indirect
 	github.com/go-playground/form v3.1.4+incompatible // indirect
 	github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0 // indirect
