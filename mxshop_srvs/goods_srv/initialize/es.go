@@ -3,11 +3,12 @@ package initialize
 import (
 	"context"
 	"fmt"
-	"github.com/olivere/elastic/v7"
 	"log"
 	"mxshop_srvs/goods_srv/global"
 	"mxshop_srvs/goods_srv/model"
 	"os"
+
+	"github.com/olivere/elastic/v7"
 )
 
 func InitEs() {
