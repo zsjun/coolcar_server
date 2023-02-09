@@ -8,17 +8,18 @@ import (
 	"os/signal"
 	"syscall"
 
+	uuid "github.com/satori/go.uuid"
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/health"
 	"google.golang.org/grpc/health/grpc_health_v1"
-	"github.com/satori/go.uuid"
 
+	"mxshop_srvs/goods_srv/global"
 	"mxshop_srvs/goods_srv/handler"
 	"mxshop_srvs/goods_srv/initialize"
 	"mxshop_srvs/goods_srv/proto"
-	"mxshop_srvs/goods_srv/global"
 	"mxshop_srvs/goods_srv/utils"
+
 	"github.com/hashicorp/consul/api"
 )
 

@@ -14,8 +14,9 @@ import (
 //https://zhuanlan.zhihu.com/p/73997266
 //这些类型我们使用int32还是int
 type Category struct{
+	// 同一个package下，可以直接互相使用
 	BaseModel
-	// gorm数据库中的类型
+	// gorm数据库中的类型，实际开发过程中需要设置为not null
 	Name  string `gorm:"type:varchar(20);not null" json:"name"`
 	ParentCategoryID int32 `json:"parent"`
 	ParentCategory *Category `json:"-"`

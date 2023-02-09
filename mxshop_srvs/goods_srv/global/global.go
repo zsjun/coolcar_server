@@ -1,8 +1,9 @@
 package global
 
 import (
-	"gorm.io/gorm"
 	"mxshop_srvs/goods_srv/config"
+
+	"gorm.io/gorm"
 
 	"github.com/olivere/elastic/v7"
 )
